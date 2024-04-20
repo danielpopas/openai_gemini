@@ -7,7 +7,7 @@ export default {
       return handleOPTIONS();
     }
     const url = new URL(request.url);
-	 if (!url.pathname.endsWith("/public/chat") || request.method !== "POST") {
+	 if (!url.pathname.endsWith("/api/chat") || request.method !== "POST") {
 		return new Response("404 Not Found", { status: 404 });
 	 }
     const auth = request.headers.get("Authorization");
