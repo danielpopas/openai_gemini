@@ -4,40 +4,6 @@ import { Buffer } from "node:buffer";
 export default {
 	async fetch(request) {
 	  const url = new URL(request.url);
-	  if (url.pathname === "/") {
-		 const htmlContent = `
-			<!DOCTYPE html>
-			<html lang="ru">
-			<head>
-			<link rel="stylesheet" href="src/chat.css">
-			  <meta charset="UTF-8">
-			  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-			  <title>OpenAI Gemini API</title>
-			  <style>
-				body { font-family: Arial, sans-serif; }
-				#chat-container { width: 80%; margin: 20px auto; }
-				#messages { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; }
-				#input { width: 100%; padding: 10px; }
-			  </style>
-			</head>
-			<body>
-			  <h1>Добро пожаловать в OpenAI Gemini API</h1>
-			  <div id="chat-container">
-			  <div id="chat-container">
-			  <div id="messages"></div>
-			  <input type="text" id="input" placeholder="Введите сообщение...">
-			  <button id="sendButton">Отправить</button> <!-- Кнопка для отправки сообщения -->
-		 </div>
-			  <script src="chat.js"></script>
-			</body>
-			</html>
-		 `;
-		 return new Response(htmlContent, {
-			headers: {
-			  "Content-Type": "text/html"
-			}
-		 });
-	  }
 	  // Обработка других URL и методов как раньше
 	  if (!url.pathname.endsWith("/v1/chat/completions") || request.method !== "POST") {
 		 return new Response("404 Not Found", { status: 404 });
