@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Простой Чат</title>
+    <style>
+        #messages {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        form {
+            display: flex;
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="messages"></div>
+    <form id="chatForm">
+        <input type="text" id="messageInput" placeholder="Введите сообщение..." autocomplete="off">
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const chatForm = document.getElementById('chatForm');
+
+        chatForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const message = messageInput.value;
+            messageInput.value = '';
+
+            // Отправка сообщения на сервер
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer AIzaSyD-2HgAcDbq8nh4XaTLwk6XwDlZh1qMrIY'
+                },
+                body: JSON.stringify({ message: message })
+            });
+
+            const responseData = await response.json();
+            if (response.ok) {
+                addMessageToChat('Вы', message);
+                addMessageToChat('Ассистент', responseData.reply);
+            } else {
+                addMessageToChat('Ошибка', 'Не удалось отправить сообщение.');
+            }
+        });
+
+        function addMessageToChat(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
