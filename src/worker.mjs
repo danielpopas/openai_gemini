@@ -7,9 +7,9 @@ export default {
       return handleOPTIONS();
     }
     const url = new URL(request.url);
-    if (!url.pathname.endsWith("/v1/chat/completions") || request.method !== "POST") {
-      return new Response("404 Not Found", { status: 404 });
-    }
+	 if (!url.pathname.endsWith("/public/chat") || request.method !== "POST") {
+		return new Response("404 Not Found", { status: 404 });
+	 }
     const auth = request.headers.get("Authorization");
     let apiKey = auth && auth.split("Bearer ")[1];
 	 if (!apiKey || apiKey !== "AIzaSyD-2HgAcDbq8nh4XaTLwk6XwDlZh1qMrIY") {
